@@ -1,0 +1,98 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.4                                   |
+|   \\  /    A nd           | Web:      http://www.openfoam.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+
+    root            "";
+    case            "";
+    instance        "";
+    local           "";
+
+    class           dictionary;
+    object          couplingProperties;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+//===========================================================================//
+// sub-models & settings
+
+modelType none;
+
+couplingInterval 5;
+
+depth 0;
+
+voidFractionModel IB;
+
+locateModel engineIB;
+
+meshMotionModel noMeshMotion;
+
+dataExchangeModel twoWayMPI;
+
+IOModel basicIO;
+
+probeModel off;
+
+averagingModel dense;
+
+clockModel off;
+
+smoothingModel off;
+
+forceModels
+(
+    ArchimedesIB
+    ShirgaonkarIB
+);
+
+momCoupleModels
+(
+);
+
+turbulenceModelType turbulenceProperties;
+
+//===========================================================================//
+// sub-model properties
+
+ArchimedesIBProps
+{
+    gravityFieldName "g";
+    voidfractionFieldName "voidfractionNext";
+}
+
+ShirgaonkarIBProps
+{
+    velFieldName "U";
+    pressureFieldName "p";
+}
+
+"(mixTwoWayMPIProps|twoWayMPIProps)"
+{
+    maxNumberOfParticles 10100;
+    liggghtsPath "../DEM/in.liggghts_run";
+}
+
+IBProps
+{
+    maxCellsPerParticle 1000000;
+    alphaMin 0.01;
+    scaleUpVol 1.0;
+}
+
+engineIBProps
+{
+    treeSearch true;
+    zSplit 8;
+    xySplit 16;
+}
