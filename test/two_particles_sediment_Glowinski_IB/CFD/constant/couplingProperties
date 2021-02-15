@@ -86,7 +86,7 @@ ShirgaonkarIBProps
 
 IBProps
 {
-    maxCellsPerParticle 1000000;
+    maxCellsPerParticle 10000000;
     alphaMin 0.01;
     scaleUpVol 1.0;
 }
